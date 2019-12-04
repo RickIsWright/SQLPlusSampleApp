@@ -1,0 +1,65 @@
+This sample project illustrates the basic functionality of SQL+.NET code generation, as well
+as illustrate how the generated code can be utilized in various client applications.
+
+1) SQL+.NET is a SQL first ORM, so you need a database. Use the dbscript.sql to create that database, 
+	and DB objects used moving forward. The SqlPus.Data project contains the code that was 
+	generated using SQL+.NET - feel free to explore the generated code.
+
+2) Edit the connection string in the project SqlPlusDemo.Settings project at ConnectionStrings.cs
+
+3) You can now run the test project - From the menu select Test>>Run All Test
+	a) Click on an individual test to see the additional output for that particular test.
+	b) **Before any subsequent test runs, execute the primefeedbacktests.sql**
+	c) Explore the code in the test project.
+
+4) Execute the seeddata.sql
+
+5) Right click on the SqlPlusDemo.Web project and select debug>>start new instance
+	a) Click the Submit link
+		1) Try submitting the form with invalid data
+		2) Try submitting the form with valid data
+		3) Add a break point on the home controller [HttpPost] Feedback action and step through the code
+	b) Click the View Page link
+		1) Try different pages by clicking the number links
+		2) Try the delete functionality
+		3) Add a break point on either of the actions in the FeedbackAdminController and step through the code
+	c) Notice how the FeedbackInputViewModel was create by deriving from the input class, adding properties,
+	   and extending the validation.
+
+5) Right click on the SqlPlus.Data.Functions project and select debug>>start new instance
+	a) Fire up postman
+	b) Try the feedback paged routine get - http://localhost:7071/api/Feedback/1/20 - different pages and sizes
+	c) Try the feedback by id routine get - http://localhost:7071/api/Feedback/1 with different values for the id
+	d) Try the feedback upsert routine post http://localhost:7071/api/Feedback
+		1)No feedbackId yields an insert
+			{
+			"lastName": "LastName-1",
+			"firstName": "FirstName-1",
+			"email": "Email1@somewhere.com",
+			"subject": "Subject-1",
+			"message": "Message-1",
+			"created": "2019-12-03T21:08:39.3515481"
+		  }
+		2)FeedbackId yeilds update
+		 {
+			"feedbackId": 21,
+			"lastName": "LastName-1",
+			"firstName": "FirstName-1",
+			"email": "Email1@somewhere.com",
+			"subject": "Subject-1",
+			"message": "Message-1",
+			"created": "2019-12-03T21:08:39.3515481"
+		 }
+	e) Try the feedback delete - http://localhost:7071/api/Feedback/100 - with different values
+
+6) Leave the azure function app running and start the blazor application 
+	a) Notice that the input models in the blazor app are only linked to the project
+	b) Try submitting feedback - and notice we added no validation to our calls
+
+7) Register for a free trial at www.SQLPLUS.net and feel free to continue exploring this great tool.
+
+8) Have a great day!
+
+
+
+

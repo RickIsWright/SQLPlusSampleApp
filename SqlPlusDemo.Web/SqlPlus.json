@@ -1,0 +1,63 @@
+/*
+    SqlPlus.json provides the settings for building projects.
+    1. Edit the connection string by replacing the values: SERVER, INITIAL_CATALOG, USER, PASSWORD with the necessary values to connect to the source database.
+    2. Build Schemas identify the schemas in the database that should be built, as well as the namespace that schema will generate.
+       a. Enter the database schema for SCHEMA, and the desired value for the NAMESPACE.
+       b. Repeat the process for all schemas you wish to build.
+    3. Build Routines identify specific routines to be built in cases where an entire schema build is not desired.
+       a. Enter the SCHEMA, NAMESPACE, and ROUTINE values.
+       b. Repeat the process for all the routines you wish to build.
+    4. Remove any unnecessary BuildSchemas and BuildRoutines items.
+    5. Edit the EnumQueries - for any enumerations desired provide a name for the enumeration, the source schema and table name, the table column for the enumeration name, the table column for the enumeration value, and an optional filter.
+    6. Remove any unnecessary EnumQueries items.
+    7. Choose the appropriate template - DotNetFramework or DotNetCore
+    8. Enter the UserName and Password you used when you registered at SQLPlus.net
+    9. If you are using source control be sure to exclude the SQLPlus.json file, as it may contain sensitive information.
+    10. Save and close the file.
+*/
+{
+  "RenderUrl": "https://sqlplusrender.azurewebsites.net/api",
+  "ConnectionString": "Server = SERVER; Initial Catalog = INITIAL_CATALOG; User ID = USER; Password = PASSWORD;",
+  "DatabaseType": "MSSQLServer",
+  "BuildSchemas": [
+    {
+      "Schema": "SCHEMA",
+      "Namespace": "NAMESPACE"
+    },
+    {
+      "Schema": "SCHEMA",
+      "Namespace": "NAMESPACE"
+    }
+  ],
+  "BuildRoutines": [
+    {
+      "Schema": "SCHEMA",
+      "Namespace": "NAMESPACE",
+      "Routine": "ROUTINE"
+    },
+    {
+      "Schema": "SCHEMA",
+      "Namespace": "NAMESPACE",
+      "Routine": "ROUTINE"
+    }
+  ],
+  "EnumQueries": [
+    {
+      "Name": "<name for the enum>",
+      "Table": "<source table of enum>",
+      "NameColumn": "<column for the name>",
+      "ValueColumn": "<column for the value>",
+      "Filter": "<query filter>"
+    },
+    {
+      "Name": "<name for the enum>",
+      "Table": "<source table of enum>",
+      "NameColumn": "<column for the name>",
+      "ValueColumn": "<column for the value>",
+      "Filter": "<query filter>"
+    }
+ ],
+  "Template": "DotNetFramework",
+  "UserName": "USERNAME",
+  "Password": "PASSWORD"
+}

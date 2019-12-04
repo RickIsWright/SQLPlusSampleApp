@@ -1,0 +1,75 @@
+﻿@model SqlPlus.Data.Default.Models.FeedbackPagedOutput
+
+@{
+    ViewData["Title"] = "Index";
+}
+
+<h1>Index</h1>
+
+@if (Model.ReturnValue == SqlPlus.Data.Default.Models.FeedbackPagedOutput.Returns.NoRecords)
+{
+    <p>No records</p>
+}
+else
+{
+    <table class="table">
+        <thead>
+            <tr>
+                <th>
+                    @Html.DisplayNameFor(model => model.ResultData[0].LastName)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.ResultData[0].FirstName)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.ResultData[0].Email)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.ResultData[0].Subject)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.ResultData[0].Message)
+                </th>
+                <th>
+                    @Html.DisplayNameFor(model => model.ResultData[0].Created)
+                </th>
+                <th></th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var item in Model.ResultData)
+            {
+                <tr>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.LastName)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.FirstName)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.Email)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.Subject)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.Message)
+                    </td>
+                    <td>
+                        @Html.DisplayFor(modelItem => item.Created)
+                    </td>
+                    <td>
+                        <a asp-controller="FeedbackAdmin" asp-action="Delete" asp-route-id="@item.FeedbackId" asp-route-page="@ViewBag.Page">Delete</a>
+                    </td>
+                </tr>
+            }
+        </tbody>
+    </table>
+    if (Model.PageCount > 1)
+    {
+        <h3>Pages</h3>for (int idx = 1; idx <= Model.PageCount; idx++)
+        {
+            <a asp-controller="FeedbackAdmin" asp-action="Index" asp-route-page="@idx">@idx</a>
+        }
+    }
+}

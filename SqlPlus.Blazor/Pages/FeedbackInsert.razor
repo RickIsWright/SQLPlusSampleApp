@@ -1,0 +1,95 @@
+﻿@page "/feedback"
+@using SqlPlus.Data.Default.Models;
+@using Newtonsoft.Json;
+@using System.Text;
+
+<style>
+    label{
+        display:block;
+    }
+    input{
+        width: 400px;
+    }
+    .error{
+       color:red;
+       font-weight:bold;
+    }
+</style>
+<h3>Your feedback is always welcome.</h3>
+@if (Result != null)
+{
+    <p>Post Results</p>
+    <code>@Result</code>
+}
+else
+{
+    <p>This will call the azure function FeedbackUpsert. Be sure to start the azure function project first, and that the function url is correct. </p>
+    <input type="text" @bind="@RestUrl"/>
+
+    <br />
+    <EditForm Model="@input" OnValidSubmit="@ValidSubmit">
+        <p class="error">@ErrorMessage</p>
+        <DataAnnotationsValidator />
+        <p>
+            <label asp-for="FirstName">First Name</label>
+            <input type="text" @bind="input.FirstName"/>
+            <ValidationMessage For="@(() => input.FirstName)"/>
+        </p>
+        <p>
+            <label asp-for="LastName">Last Name</label>
+            <input type="text" @bind="input.LastName"/>
+            <ValidationMessage For="@(() => input.LastName)"/>
+        </p>
+        <p>
+            <label asp-for="Email">Email</label>
+            <input type="text" @bind="input.Email"/>
+            <ValidationMessage For="@(() => input.Email)"/>
+        </p>
+        <p>
+            <label asp-for="Subject">Subject</label>
+            <input type="text" @bind="input.Subject"/>
+            <ValidationMessage For="@(() => input.Subject)"/>
+        </p>
+        <p>
+            <label asp-for="Message">Message</label>
+            <input type="text" @bind="input.Message"/>
+            <ValidationMessage For="@(() => input.Message)"/>
+        </p>
+        <p>
+            <button type="submit" class="btn-primary" >Send</button>
+        </p>
+
+    </EditForm>
+}
+
+
+@code {
+
+    private string Result { set; get; } = null;
+    private string RestUrl { set; get; } = "http://localhost:7071/api/Feedback";
+    private string ErrorMessage { set; get; } = null;
+
+    //binding our razor view directly to the input
+    private FeedbackUpsertInput input = new FeedbackUpsertInput();
+
+    public async void ValidSubmit()
+    {
+        ErrorMessage = null;
+        Result = null;
+        try
+        {
+            using (HttpClient client = new HttpClient())
+            {
+                var content = new StringContent(JsonConvert.SerializeObject(input), Encoding.UTF8, "application/json");
+                var response = await client.PostAsync(RestUrl, content);
+                Result = await response.Content.ReadAsStringAsync();
+            }
+        }
+        catch (Exception ex)
+        {
+            ErrorMessage = ex.Message;
+        }
+
+        StateHasChanged();
+    }
+}
