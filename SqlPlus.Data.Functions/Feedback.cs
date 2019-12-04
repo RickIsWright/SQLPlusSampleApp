@@ -42,19 +42,38 @@ namespace SqlPlus.Data.Functions
 
         [FunctionName(nameof(FeedbackUpsert))]
         public static IActionResult FeedbackUpsert(
-            [HttpTrigger(AuthorizationLevel.Anonymous, "post", Route = "Feedback")]
+            [HttpTrigger(AuthorizationLevel.Anonymous, "put", "post", Route = "Feedback")]
             HttpRequest req,
             ILogger log)
         {
             //create the input from the request body
             var input = DeserializeBody<FeedbackUpsertInput>(req);
 
-            //validate nothing passed
-            if (input == null) return new BadRequestObjectResult($"Expecting Type {nameof(FeedbackUpsertInput)} - no data received");
+            if (input == null)
+            {
+                return new BadRequestObjectResult($"Expecting Type {nameof(FeedbackUpsertInput)} - no data received");
+            }
+            
+            if (!input.IsValid())
+            {
+                return new BadRequestObjectResult(input);
+            }
 
-            //validate input
-            if (!input.IsValid()) return new BadRequestObjectResult(input);
-
+            if (req.Method.ToLower() == "put")
+            {
+                if(input.FeedbackId == 0)
+                {
+                    return new BadRequestObjectResult("An update requires a non zero value for feedback id");
+                }
+            }
+            else
+            {
+                if (input.FeedbackId != 0)
+                {
+                    return new BadRequestObjectResult("Do not supply the feedback id when posting a new record");
+                }
+            }
+            
             //call service passing input
             var output = ServiceFactory.DefaultService(log).FeedbackUpsert(input);
 

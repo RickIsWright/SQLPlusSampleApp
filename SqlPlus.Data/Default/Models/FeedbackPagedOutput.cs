@@ -25,9 +25,6 @@ namespace SqlPlus.Data.Default.Models
              Ok = 1
         }
 
-		/// <summary>
-		/// Output of number of pages
-		/// </summary>
 		public int? PageCount { set; get; }
 
 		public Returns ReturnValue { set; get; }

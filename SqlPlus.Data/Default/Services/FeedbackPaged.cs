@@ -125,7 +125,7 @@ namespace SqlPlus.Data.Default
 		}
 
         /// <summary>
-        /// Queries dbo.Feedback table.
+        /// Selects page results from dbo.Feedback table.
         /// SQL+ Routine: dbo.FeedbackPaged - Authored by Alan Hyneman
         /// </summary>
         public FeedbackPagedOutput FeedbackPaged(IFeedbackPagedInput input)

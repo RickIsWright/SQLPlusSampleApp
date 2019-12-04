@@ -9,8 +9,8 @@
     }
   ],
   "Template": "DotNetCore",
-  "UserName": "{username}",
-  "Password": "{password}"
+  "UserName": "alanhyneman",
+  "Password": "brutus66"
 }
 //To generate code you need a subscription to SQL+.NET - sign up for free here www.SQPLUS.net
 //Edit the connection string setting the server and password.
