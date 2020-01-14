@@ -13,7 +13,8 @@ namespace SqlPlusDemo.Settings
             {
                 //Edit the server name and password
 
-                return "Server = {server}; Initial Catalog = SqlPlusDemo; User ID = sa; Password = {password}";
+                //return "Server = {server}; Initial Catalog = SqlPlusDemo; User ID = sa; Password = {password}";
+                return "Server = DESKTOP-E6COJ7P; Initial Catalog = SqlPlusDemo; User ID = sa; Password = 3apples";
             }
         }
     }

@@ -15,9 +15,9 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "SqlPlus.Blazor", "SqlPlus.B
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution Items", "{39243B28-65D5-4109-A50B-4B24B3A8430C}"
 	ProjectSection(SolutionItems) = preProject
-		dbscript.sql = dbscript.sql
-		primefeedbacktests.sql = primefeedbacktests.sql
-		seeddata.sql = seeddata.sql
+		dbscript.txt = dbscript.txt
+		primefeedbacktests.txt = primefeedbacktests.txt
+		seeddata.txt = seeddata.txt
 		StartHere.txt = StartHere.txt
 	EndProjectSection
 EndProject

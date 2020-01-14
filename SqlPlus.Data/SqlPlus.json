@@ -1,6 +1,6 @@
 {
   "RenderUrl": "https://sqlplusrender.azurewebsites.net/api",
-  "ConnectionString": "Server = {server}; Initial Catalog = SqlPlusDemo; User ID = sa; Password = {password};",
+  "ConnectionString": "Server = DESKTOP-E6COJ7P; Initial Catalog = SqlPlusDemo; User ID = sa; Password = 3apples;",
   "DatabaseType": "MSSQLServer",
   "BuildSchemas": [
     {

@@ -1,19 +1,22 @@
 This sample project illustrates the basic functionality of SQL+.NET code generation, as well
-as illustrate how the generated code can be utilized in various client applications.
+as illustrates how the generated code can be utilized in various client applications.
 
-1) SQL+.NET is a SQL first ORM, so you need a database. Use the dbscript.sql to create that database 
+*NOTE
+
+1) SQL+.NET is a SQL first ORM, so you need a database. Use the dbscript.txt to create that database 
 	and the DB objects used moving forward. The SqlPus.Data project contains the code that was 
 	generated using SQL+.NET - feel free to explore the generated code.
 
-2) Edit the connection string in the project SqlPlusDemo.Settings project at ConnectionStrings.cs
+2) Edit the connection string in the project SqlPlusDemo.Settings project at ConnectionStrings.cs pointing 
+	it to the database you created in step 1
 
 3) You can now run the test project - From the menu select Test>>Run All Test
 	a) Double click on an individual test to go directly to the code.
-	b) Some tests write to the console - bottom left - click on >> open additional output for this result.
-	b) **Before any subsequent test runs, execute the primefeedbacktests.sql**
+	b) Some tests write line to the console - in the text explorer wwindow click on >> open additional output for this result.
+	b) **Before any subsequent test runs, execute the primefeedbacktests.txt**
 	c) Explore the code in the test project.
 
-4) Execute the seeddata.sql
+4) Execute the seeddata.txt
 
 5) Right click on the SqlPlusDemo.Web project and select debug>>start new instance
 	a) Click the Submit link
@@ -25,12 +28,12 @@ as illustrate how the generated code can be utilized in various client applicati
 		1) Try different pages by clicking the number links
 		2) Try the delete functionality
 		3) Add a break point on either of the actions in the FeedbackAdminController and step through the code
-	c) Have a look at the FeedbackInputViewModel, which derive from the input class, and adds properties specific to
+	c) Have a look at the FeedbackInputViewModel, which derives from the input class, adds properties specific to
 	   the html form, and overrides the validation.
 
 5) Right click on the SqlPlus.Data.Functions project and select debug>>start new instance
 	a) Fire up postman
-	b) Try the feedback paged routine *get* - http://localhost:7071/api/Feedback/1/20 - different pages and sizes
+	b) Try the feedback paged routine *get* - http://localhost:7071/api/Feedback/1/20 - different pages and sizes - the range for page size is 10-50
 	c) Try the feedback by id routine *get* - http://localhost:7071/api/Feedback/1 with different values for the id
 	d) Try the feedback upsert routine *post* - http://localhost:7071/api/Feedback
 		1)Post inserts a new record
@@ -56,29 +59,25 @@ as illustrate how the generated code can be utilized in various client applicati
 	f) Try the feedback delete - http://localhost:7071/api/Feedback/100 - with different values
 
 6) Leave the azure function app running and start the blazor application 
-	a) Notice that the input models in the blazor app are only linked to the project.
-	b) Try submitting feedback - and notice we added no validation to our calls.
+	a) Notice that the input models in the blazor app are only linked to the project so we don't need to include the entire class library
+	b) Try submitting feedback - and notice we added no validation to our calls as this is all handled by the models
 
 **************************************************************************************************************
 
 Greetings, I'm alan hyneman, creator of SQL+.NET, and I hope after exploring the sample applications
 you've gained some insight, and see the value in this tool. 
 
-It is NOT a JR developer's tool. It is for those of you who've spent years in the trenches, and 
-understand how critical data is, not just to your organization but to the entire world. 
-
-I realize this is a smaller group and reduces the market share for this tool, and I'm fine with 
-that, I built this tool for SR developers, particularly those with a deep understanding
-of SQL, because everyone else ignored us.
-
-This project is self-funded by me, and my primary objective at this time is to get to a point
-where it is self-sustaining, and your support goes a long way to acheiving that goal.
+What you will find when building services this way, is that you can be very productive, all the why building highly optimized
+code that will hold up in even the most demanding environments. 
 
 I have two simple requests for you
 	1) If you DON'T like the product, let me know why. Alan@SQLPLUS.net
-	2) If you DO like the product, understand that your paid subscription goes a long way to ensuring it's
-		success, and I appreciate every single one of you.
+	2) If you DO like the product, tell your friends and coworkers about it.
 
+web: www.SqlPlus.net
+twitter: @SQLPLUSDOTNET
+facebook: www.facebook.com/sqlplusdotnet
+linkedin: www.linkedin.com/in/alanhynemandev
 
 Sincerely,
 Alan Hyneman

@@ -163,7 +163,6 @@ namespace SqlPlusDemo.Tests
             Utilities.WriteValidationErrors(input.ValidationResults);
         }
 
-
         [SetUp]
         public void Setup()
         {
