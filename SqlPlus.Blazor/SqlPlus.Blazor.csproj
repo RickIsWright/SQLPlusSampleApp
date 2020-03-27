@@ -5,8 +5,6 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <Compile Include="..\SqlPlus.Data\Models\FeedbackUpsertInput.cs" Link="SqlPlus.Data.Models\FeedbackUpsertInput.cs" />
-    <Compile Include="..\SqlPlus.Data\Models\FeedbackUpsertOutput.cs" Link="SqlPlus.Data.Models\FeedbackUpsertOutput.cs" />
     <Compile Include="..\SqlPlus.Data\Models\ModelBase.cs" Link="SqlPlus.Data.Models\ModelBase.cs" />
   </ItemGroup>
 

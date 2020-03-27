@@ -6,29 +6,15 @@
 //     the code is regenerated.
 // </auto-generated>
 // ------------------------------------------------------------------------------
-
-using System;
-using System.Data.SqlClient;
 using System.Collections.Generic;
-using System.ComponentModel.DataAnnotations;
-
 namespace SqlPlus.Data.Models
 {
     /// <summary>
-    /// Output object for FeedbackUpsert method.
+    /// Result object for FeedbackTableMulti routine.
     /// </summary>
-    public partial class FeedbackUpsertOutput
-    {
-        public enum Returns
-        {
-             Inserted = 1,
-             NotFound = 0,
-             Modified = 2
+    public partial class FeedbackTableMultiResult
+	{
+            public int? FeedbackId { set; get; }
+            public string LastName { set; get; }
         }
-
-		public int? FeedbackId { set; get; }
-
-		public Returns ReturnValue { set; get; }
-
-    }
 }

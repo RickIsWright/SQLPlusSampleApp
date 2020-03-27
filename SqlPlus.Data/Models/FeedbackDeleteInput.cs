@@ -25,6 +25,9 @@ namespace SqlPlus.Data.Models
     /// </summary>
     public class FeedbackDeleteInput : ValidInput, IFeedbackDeleteInput
     {
+        /// <summary>
+        /// FeedbackId
+        /// </summary>
         [Required(AllowEmptyStrings = false)]
         public int? FeedbackId { set; get; }
 

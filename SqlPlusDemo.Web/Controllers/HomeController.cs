@@ -37,7 +37,7 @@ namespace SqlPlusDemo.Web.Controllers
             //Since the FeedbackInputViewModel derives from the FeedbackUpsertInput object,
             //which implements the IFeedbackUpsertInput we can pass the derived object to the service.
             //No silly mapping between objects
-            var result = service.FeedbackUpsert(input);
+            var result = service.FeedbackInsert(input);
 
             return new ContentResult { Content = $"Action: {result.ReturnValue} FeedbackId: {result.FeedbackId}" };
         }

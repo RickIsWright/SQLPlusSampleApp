@@ -3,7 +3,7 @@
 namespace SqlPlusDemo.Settings
 {
     /// <summary>
-    /// I did this so you don't have to edit configuration files all over the place.
+    /// This is just a hacky way to make the connection string available to all the projects, this is after all a demo.
     /// </summary>
     public class ConnectionStrings
     {

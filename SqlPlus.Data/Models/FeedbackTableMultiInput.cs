@@ -13,26 +13,19 @@ using System.ComponentModel.DataAnnotations;
 namespace SqlPlus.Data.Models
 {
     /// <summary>
-    /// Interface for FeedbackPagedInput object.
+    /// Interface for FeedbackTableMultiInput object.
     /// </summary>
-    public interface IFeedbackPagedInput : IValidInput
+    public interface IFeedbackTableMultiInput : IValidInput
     {
-        int? PageSize { set; get; }
-        int? PageNumber { set; get; }
+        int? FeedbackId { set; get; }
     }
 
     /// <summary>
-    /// Input object for FeedbackPaged method.
+    /// Input object for FeedbackTableMulti method.
     /// </summary>
-    public class FeedbackPagedInput : ValidInput, IFeedbackPagedInput
+    public class FeedbackTableMultiInput : ValidInput, IFeedbackTableMultiInput
     {
-        [Range(typeof(int), "10", "50")]
-        [Required(AllowEmptyStrings = false)]
-        public int? PageSize { set; get; }  = (int?)25;
-
-        [Range(typeof(int), "1", "2147483647")]
-        [Required(AllowEmptyStrings = false)]
-        public int? PageNumber { set; get; }  = (int?)1;
+        public int? FeedbackId { set; get; }
 
     }
 } 

@@ -13,7 +13,7 @@ namespace SqlPlusDemo.Tests
             var input = new HelloWorldInput { Name = "Alan" };
             Assert.IsTrue(input.IsValid());
 
-            var result = ServiceFactory.NamespaceService().HelloWorld(input);
+            var result = ServiceFactory.Sample().HelloWorld(input);
 
             Assert.IsTrue(result.ReturnValue == HelloWorldOutput.Returns.Ok);
 

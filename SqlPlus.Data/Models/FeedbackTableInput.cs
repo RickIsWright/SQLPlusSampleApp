@@ -6,21 +6,27 @@
 //     the code is regenerated.
 // </auto-generated>
 // ------------------------------------------------------------------------------
-using System;
+
 using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
+
 namespace SqlPlus.Data.Models
 {
     /// <summary>
-    /// Result object for FeedbackTopCount routine.
+    /// Interface for FeedbackTableInput object.
     /// </summary>
-    public partial class FeedbackTopCountResult
-	{
-            public int FeedbackId { set; get; }
-            public string LastName { set; get; }
-            public string FirstName { set; get; }
-            public string Email { set; get; }
-            public string Subject { set; get; }
-            public string Message { set; get; }
-            public DateTime Created { set; get; }
-        }
-}
+    public interface IFeedbackTableInput : IValidInput
+    {
+        int? FeedbackId { set; get; }
+    }
+
+    /// <summary>
+    /// Input object for FeedbackTable method.
+    /// </summary>
+    public class FeedbackTableInput : ValidInput, IFeedbackTableInput
+    {
+        [Required(AllowEmptyStrings = false)]
+        public int? FeedbackId { set; get; }
+
+    }
+} 

@@ -9,10 +9,9 @@ namespace SqlPlusDemo.Web.Models
     /// SQL+.NET
     /// Creating a custom view model then mapping objects is silly.
     /// Simply derive from the input object to extend functionality.
-    /// Add properties for the little math thingy and prevent
-    /// scott hanselman from providing feedback, he'll have to use another approach.
+    /// Add properties for the little math gadget
     /// </summary>
-    public class FeedbackInputViewModel : FeedbackUpsertInput
+    public class FeedbackInputViewModel : FeedbackInsertInput
     {
         public FeedbackInputViewModel()
         {
@@ -32,11 +31,6 @@ namespace SqlPlusDemo.Web.Models
         /// </summary>
         public override bool IsValid()
         {
-            if (FirstName?.ToLower() == "scott" && LastName?.ToLower() == "hanselman")
-            {
-                List<string> memberNames = new List<string> { nameof(FirstName), nameof(LastName) };
-                ValidationResults.Add(new ValidationResult("Sorry, we cannot accept feedback from Scott Hansleman at this time", memberNames));
-            }
             if (NumberOne + NumberTwo != NumberResult)
             {
                 List<string> memberNames = new List<string> { nameof(NumberResult) };

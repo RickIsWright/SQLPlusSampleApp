@@ -19,88 +19,84 @@ namespace SqlPlus.Data
     {
 
         /// <summary>
-        /// Builds the command object for FeedbackTopCount method.
+        /// Builds the command object for FeedbackTableMulti method.
         /// </summary>
         /// <param name="cnn">The connection that will execute the procedure.</param>
-        /// <param name="input">FeedbackTopCountInput instance for loading parameter values.</param>
+        /// <param name="input">FeedbackTableMultiInput instance for loading parameter values.</param>
         /// <returns>SqlCommand ready for execution.</returns>
-        private SqlCommand GetFeedbackTopCountCommand(SqlConnection cnn, IFeedbackTopCountInput input)
+        private SqlCommand GetFeedbackTableMultiCommand(SqlConnection cnn, IFeedbackTableMultiInput input)
         {
             SqlCommand result = new SqlCommand()
             {
                 CommandType = CommandType.Text,
-                CommandText = "SELECT * FROM [dbo].[FeedbackTopCount](@Count)",
+                CommandText = "SELECT * FROM [dbo].[FeedbackTableMulti](@FeedbackId)",
                 Connection = cnn
             };
 
             result.Parameters.Add(new SqlParameter()
             {
-                ParameterName = "@Count",
+                ParameterName = "@FeedbackId",
                 Direction = ParameterDirection.Input,
                 SqlDbType = SqlDbType.Int,
                 Scale = 0,
                 Precision = 10,
-				Value = (object)input.Count ?? DBNull.Value
+				Value = (object)input.FeedbackId ?? DBNull.Value
             });
 
             return result;
         }
 
-        private FeedbackTopCountResult GetFeedbackTopCountResultFromReader(SqlDataReader rdr)
+        private FeedbackTableMultiResult GetFeedbackTableMultiResultFromReader(SqlDataReader rdr)
         {
-            FeedbackTopCountResult result = new FeedbackTopCountResult();
+            FeedbackTableMultiResult result = new FeedbackTableMultiResult();
 
-            result.FeedbackId = rdr.GetInt32(0);
+            if(!rdr.IsDBNull(0))
+            {
+                result.FeedbackId = rdr.GetInt32(0);
+            }
 
-            result.LastName = rdr.GetString(1);
-
-            result.FirstName = rdr.GetString(2);
-
-            result.Email = rdr.GetString(3);
-
-            result.Subject = rdr.GetString(4);
-
-            result.Message = rdr.GetString(5);
-
-            result.Created = rdr.GetDateTime(6);
+            if(!rdr.IsDBNull(1))
+            {
+                result.LastName = rdr.GetString(1);
+            }
 
             return result;
         }
 
 
-        private void FeedbackTopCountCommand(SqlCommand cmd, FeedbackTopCountOutput output)
+        private void FeedbackTableMultiCommand(SqlCommand cmd, FeedbackTableMultiOutput output)
         {
             using (SqlDataReader rdr = cmd.ExecuteReader())
             {
-                output.ResultData = new List<FeedbackTopCountResult>();
+                output.ResultData = new List<FeedbackTableMultiResult>();
                 while(rdr.Read())
                 {
-                    output.ResultData.Add(GetFeedbackTopCountResultFromReader(rdr));
+                    output.ResultData.Add(GetFeedbackTableMultiResultFromReader(rdr));
                 }
                 rdr.Close();
             }
         }
 
         /// <summary>
-        /// Comment
-        /// SQL+ Routine: dbo.FeedbackTopCount - Authored by Author
+        /// Gets the record by id and the following record by id
+        /// SQL+ Routine: dbo.FeedbackTableMulti - Authored by Alan Hyneman
         /// </summary>
-        public FeedbackTopCountOutput FeedbackTopCount(IFeedbackTopCountInput input, bool bypassValidation = false)
+        public FeedbackTableMultiOutput FeedbackTableMulti(IFeedbackTableMultiInput input, bool bypassValidation = false)
         {
             if(!bypassValidation)
             {
                 if (!input.IsValid())
                 {
-		            throw new ArgumentException("FeedbackTopCountInput fails validation - use the FeedbackTopCountInput.IsValid() method prior to passing the input argument to the FeedbackTopCount method.", "input");
+		            throw new ArgumentException("FeedbackTableMultiInput fails validation - use the FeedbackTableMultiInput.IsValid() method prior to passing the input argument to the FeedbackTableMulti method.", "input");
                 }
             }
-            FeedbackTopCountOutput output = new FeedbackTopCountOutput();
+            FeedbackTableMultiOutput output = new FeedbackTableMultiOutput();
 			if(sqlConnection != null)
             {
-                using (SqlCommand cmd = GetFeedbackTopCountCommand(sqlConnection, input))
+                using (SqlCommand cmd = GetFeedbackTableMultiCommand(sqlConnection, input))
                 {
                     cmd.Transaction = sqlTransaction;
-                    FeedbackTopCountCommand(cmd, output);
+                    FeedbackTableMultiCommand(cmd, output);
                 }
                 return output;
             }
@@ -113,10 +109,10 @@ namespace SqlPlus.Data
                 try
                 {
                     using (SqlConnection cnn = new SqlConnection(connectionString))
-                    using (SqlCommand cmd = GetFeedbackTopCountCommand(cnn, input))
+                    using (SqlCommand cmd = GetFeedbackTableMultiCommand(cnn, input))
                     {
                         cnn.Open();
-						FeedbackTopCountCommand(cmd, output);
+						FeedbackTableMultiCommand(cmd, output);
                         cnn.Close();
                     }
 					break;

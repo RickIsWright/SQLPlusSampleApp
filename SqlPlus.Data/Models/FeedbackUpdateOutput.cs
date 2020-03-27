@@ -15,9 +15,9 @@ using System.ComponentModel.DataAnnotations;
 namespace SqlPlus.Data.Models
 {
     /// <summary>
-    /// Output object for FeedbackDelete method.
+    /// Output object for FeedbackUpdate method.
     /// </summary>
-    public partial class FeedbackDeleteOutput
+    public partial class FeedbackUpdateOutput
     {
         public enum Returns
         {

@@ -57,7 +57,7 @@ namespace SqlPlus.Data
         }
 
         /// <summary>
-        /// Gets the current time from the server
+        /// Get the date from SQL
         /// SQL+ Routine: dbo.GetSQLDateTime - Authored by Alan Hyneman
         /// </summary>
         public GetSQLDateTimeOutput GetSQLDateTime()

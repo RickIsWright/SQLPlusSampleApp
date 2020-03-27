@@ -40,46 +40,68 @@ namespace SqlPlus.Data.Functions
             return new OkObjectResult(output);
         }
 
-        [FunctionName(nameof(FeedbackUpsert))]
-        public static IActionResult FeedbackUpsert(
-            [HttpTrigger(AuthorizationLevel.Anonymous, "put", "post", Route = "Feedback")]
+        [FunctionName(nameof(FeedbackInsert))]
+        public static IActionResult FeedbackInsert(
+            [HttpTrigger(AuthorizationLevel.Anonymous, "post", Route = "Feedback")]
             HttpRequest req,
             ILogger log)
         {
             //create the input from the request body
-            var input = DeserializeBody<FeedbackUpsertInput>(req);
+            var input = DeserializeBody<FeedbackInsertInput>(req);
 
+            //no input returns bad request
             if (input == null)
             {
-                return new BadRequestObjectResult($"Expecting Type {nameof(FeedbackUpsertInput)} - no data received");
+                return new BadRequestObjectResult($"Expecting Type {nameof(FeedbackInsertInput)} - no data received");
             }
             
+            //invalid input returns a bad request and we are passing back the input with validation results
             if (!input.IsValid())
             {
                 return new BadRequestObjectResult(input);
             }
 
-            if (req.Method.ToLower() == "put")
-            {
-                if(input.FeedbackId == 0)
-                {
-                    return new BadRequestObjectResult("An update requires a non zero value for feedback id");
-                }
-            }
-            else
-            {
-                if (input.FeedbackId != 0)
-                {
-                    return new BadRequestObjectResult("Do not supply the feedback id when posting a new record");
-                }
-            }
-            
             //call service passing input
-            var output = ServiceFactory.DefaultService(log).FeedbackUpsert(input);
+            var output = ServiceFactory.DefaultService(log).FeedbackInsert(input);
 
             //return output
             return new OkObjectResult(output);
         }
+
+        [FunctionName(nameof(FeedbackUpdate))]
+        public static IActionResult FeedbackUpdate(
+           [HttpTrigger(AuthorizationLevel.Anonymous, "put", Route = "Feedback")]
+            HttpRequest req,
+           ILogger log)
+        {
+            //create the input from the request body
+            var input = DeserializeBody<FeedbackUpdateInput>(req);
+
+            //no input returns bad request
+            if (input == null)
+            {
+                return new BadRequestObjectResult($"Expecting Type {nameof(FeedbackUpdateInput)} - no data received");
+            }
+
+            //invalid input returns a bad request and we are passing back the input with validation results
+            if (!input.IsValid())
+            {
+                return new BadRequestObjectResult(input);
+            }
+
+            //call service passing input
+            var output = ServiceFactory.DefaultService(log).FeedbackUpdate(input);
+
+            if(output.ReturnValue == FeedbackUpdateOutput.Returns.NotFound)
+            {
+                return new NotFoundResult();
+            }
+
+            //return output
+            return new OkObjectResult(output);
+        }
+
+
 
         [FunctionName(nameof(FeedbackDelete))]
         public static IActionResult FeedbackDelete(
@@ -102,6 +124,7 @@ namespace SqlPlus.Data.Functions
             {
                 return new NotFoundResult();
             }
+
             //all good
             return new OkObjectResult(output);
         }
@@ -136,8 +159,6 @@ namespace SqlPlus.Data.Functions
             }
             return new OkObjectResult(result);
         }
-
-        
 
         private static T DeserializeBody<T>(HttpRequest req)
         {

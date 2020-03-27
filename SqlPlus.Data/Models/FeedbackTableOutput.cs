@@ -15,17 +15,14 @@ using System.ComponentModel.DataAnnotations;
 namespace SqlPlus.Data.Models
 {
     /// <summary>
-    /// Output object for FeedbackDelete method.
+    /// Output object for FeedbackTable method.
     /// </summary>
-    public partial class FeedbackDeleteOutput
+    public partial class FeedbackTableOutput
     {
-        public enum Returns
-        {
-             NotFound = 0,
-             Ok = 1
-        }
 
-		public Returns ReturnValue { set; get; }
-
+        /// <summary>
+        /// FeedbackTableResult result.
+        /// </summary>
+        public FeedbackTableResult ResultData { set; get; }
     }
 }

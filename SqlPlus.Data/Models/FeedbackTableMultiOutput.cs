@@ -15,14 +15,14 @@ using System.ComponentModel.DataAnnotations;
 namespace SqlPlus.Data.Models
 {
     /// <summary>
-    /// Output object for FeedbackTopCount method.
+    /// Output object for FeedbackTableMulti method.
     /// </summary>
-    public partial class FeedbackTopCountOutput
+    public partial class FeedbackTableMultiOutput
     {
 
         /// <summary>
-        /// List of FeedbackTopCountResult results.
+        /// List of FeedbackTableMultiResult results.
         /// </summary>
-        public List<FeedbackTopCountResult> ResultData { set; get; }
+        public List<FeedbackTableMultiResult> ResultData { set; get; }
     }
 }

@@ -13,11 +13,10 @@ using System.ComponentModel.DataAnnotations;
 namespace SqlPlus.Data.Models
 {
     /// <summary>
-    /// Interface for FeedbackUpsertInput object.
+    /// Interface for FeedbackInsertInput object.
     /// </summary>
-    public interface IFeedbackUpsertInput : IValidInput
+    public interface IFeedbackInsertInput : IValidInput
     {
-        int? FeedbackId { set; get; }
         string LastName { set; get; }
         string FirstName { set; get; }
         string Email { set; get; }
@@ -26,32 +25,42 @@ namespace SqlPlus.Data.Models
     }
 
     /// <summary>
-    /// Input object for FeedbackUpsert method.
+    /// Input object for FeedbackInsert method.
     /// </summary>
-    public class FeedbackUpsertInput : ValidInput, IFeedbackUpsertInput
+    public class FeedbackInsertInput : ValidInput, IFeedbackInsertInput
     {
-        [Required(AllowEmptyStrings = false)]
-        public int? FeedbackId { set; get; }  = (int?)0;
-
-        [Display(Name = "Last Name", Description = "Last Name")]
+        /// <summary>
+        /// LastName
+        /// </summary>
         [MaxLength(32)]
         [Required(AllowEmptyStrings = false)]
         public string LastName { set; get; }
 
-        [Display(Name = "First Name", Description = "First Name")]
+        /// <summary>
+        /// FirstName
+        /// </summary>
         [MaxLength(32)]
         [Required(AllowEmptyStrings = false)]
         public string FirstName { set; get; }
 
+        /// <summary>
+        /// Email
+        /// </summary>
         [EmailAddress]
         [MaxLength(64)]
         [Required(AllowEmptyStrings = false)]
         public string Email { set; get; }
 
+        /// <summary>
+        /// Subject
+        /// </summary>
         [MaxLength(32)]
         [Required(AllowEmptyStrings = false)]
         public string Subject { set; get; }
 
+        /// <summary>
+        /// Message
+        /// </summary>
         [MaxLength(1024)]
         [Required(AllowEmptyStrings = false)]
         public string Message { set; get; }

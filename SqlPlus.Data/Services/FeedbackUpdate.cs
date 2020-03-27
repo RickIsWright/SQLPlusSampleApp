@@ -19,24 +19,24 @@ namespace SqlPlus.Data
     {
 
         /// <summary>
-        /// Builds the command object for FeedbackUpsert method.
+        /// Builds the command object for FeedbackUpdate method.
         /// </summary>
         /// <param name="cnn">The connection that will execute the procedure.</param>
-        /// <param name="input">FeedbackUpsertInput instance for loading parameter values.</param>
+        /// <param name="input">FeedbackUpdateInput instance for loading parameter values.</param>
         /// <returns>SqlCommand ready for execution.</returns>
-        private SqlCommand GetFeedbackUpsertCommand(SqlConnection cnn, IFeedbackUpsertInput input)
+        private SqlCommand GetFeedbackUpdateCommand(SqlConnection cnn, IFeedbackUpdateInput input)
         {
             SqlCommand result = new SqlCommand()
             {
                 CommandType = CommandType.StoredProcedure,
-                CommandText = "[dbo].[FeedbackUpsert]",
+                CommandText = "[dbo].[FeedbackUpdate]",
                 Connection = cnn
             };
 
             result.Parameters.Add(new SqlParameter()
             {
                 ParameterName = "@FeedbackId",
-                Direction = ParameterDirection.InputOutput,
+                Direction = ParameterDirection.Input,
                 SqlDbType = SqlDbType.Int,
                 Scale = 0,
                 Precision = 10,
@@ -100,43 +100,39 @@ namespace SqlPlus.Data
 
             return result;
         }
-        private void SetFeedbackUpsertCommandOutputs(SqlCommand cmd, FeedbackUpsertOutput output)
+        private void SetFeedbackUpdateCommandOutputs(SqlCommand cmd, FeedbackUpdateOutput output)
         {
-            if(cmd.Parameters[0].Value != DBNull.Value)
-            {
-                output.FeedbackId = (int?)cmd.Parameters[0].Value;
-            }
             if(cmd.Parameters[6].Value != DBNull.Value)
             {
-                output.ReturnValue = (FeedbackUpsertOutput.Returns)cmd.Parameters[6].Value;
+                output.ReturnValue = (FeedbackUpdateOutput.Returns)cmd.Parameters[6].Value;
             }
         }
-        private void FeedbackUpsertCommand(SqlCommand cmd, FeedbackUpsertOutput output)
+        private void FeedbackUpdateCommand(SqlCommand cmd, FeedbackUpdateOutput output)
         {
             cmd.ExecuteNonQuery();
-            SetFeedbackUpsertCommandOutputs(cmd, output);
+            SetFeedbackUpdateCommandOutputs(cmd, output);
         }
 
         /// <summary>
-        /// Inserts a new record into the dbo.Feedback table.
-        /// SQL+ Routine: dbo.FeedbackUpsert - Authored by Alan Hyneman
+        /// Updates record for the dbo.Feedback table.
+        /// SQL+ Routine: dbo.FeedbackUpdate - Authored by Alan Hyneman
         /// </summary>
-        public FeedbackUpsertOutput FeedbackUpsert(IFeedbackUpsertInput input, bool bypassValidation = false)
+        public FeedbackUpdateOutput FeedbackUpdate(IFeedbackUpdateInput input, bool bypassValidation = false)
         {
             if(!bypassValidation)
             {
                 if (!input.IsValid())
                 {
-		            throw new ArgumentException("FeedbackUpsertInput fails validation - use the FeedbackUpsertInput.IsValid() method prior to passing the input argument to the FeedbackUpsert method.", "input");
+		            throw new ArgumentException("FeedbackUpdateInput fails validation - use the FeedbackUpdateInput.IsValid() method prior to passing the input argument to the FeedbackUpdate method.", "input");
                 }
             }
-            FeedbackUpsertOutput output = new FeedbackUpsertOutput();
+            FeedbackUpdateOutput output = new FeedbackUpdateOutput();
 			if(sqlConnection != null)
             {
-                using (SqlCommand cmd = GetFeedbackUpsertCommand(sqlConnection, input))
+                using (SqlCommand cmd = GetFeedbackUpdateCommand(sqlConnection, input))
                 {
                     cmd.Transaction = sqlTransaction;
-                    FeedbackUpsertCommand(cmd, output);
+                    FeedbackUpdateCommand(cmd, output);
                 }
                 return output;
             }
@@ -149,10 +145,10 @@ namespace SqlPlus.Data
                 try
                 {
                     using (SqlConnection cnn = new SqlConnection(connectionString))
-                    using (SqlCommand cmd = GetFeedbackUpsertCommand(cnn, input))
+                    using (SqlCommand cmd = GetFeedbackUpdateCommand(cnn, input))
                     {
                         cnn.Open();
-						FeedbackUpsertCommand(cmd, output);
+						FeedbackUpdateCommand(cmd, output);
                         cnn.Close();
                     }
 					break;

@@ -2,17 +2,18 @@
 @using SqlPlus.Data.Models
 @using Newtonsoft.Json;
 @using System.Text;
-
 <style>
-    label{
-        display:block;
+    label {
+        display: block;
     }
-    input{
+
+    input {
         width: 400px;
     }
-    .error{
-       color:red;
-       font-weight:bold;
+
+    .error {
+        color: red;
+        font-weight: bold;
     }
 </style>
 <h3>Your feedback is always welcome.</h3>
@@ -23,45 +24,42 @@
 }
 else
 {
-    <p>This will call the azure function FeedbackUpsert. Be sure to start the azure function project first, and that the function url is correct. </p>
-    <input type="text" @bind="@RestUrl"/>
-
+    <p>This will call the azure function FeedbackInsert. Be sure to start the azure function project first, and that the function url is correct.</p>
+    <input type="text" @bind="@RestUrl" />
     <br />
     <EditForm Model="@input" OnValidSubmit="@ValidSubmit">
         <p class="error">@ErrorMessage</p>
         <DataAnnotationsValidator />
         <p>
             <label asp-for="FirstName">First Name</label>
-            <input type="text" @bind="input.FirstName"/>
-            <ValidationMessage For="@(() => input.FirstName)"/>
+            <input type="text" @bind="input.FirstName" />
+            <ValidationMessage For="@(() => input.FirstName)" />
         </p>
         <p>
             <label asp-for="LastName">Last Name</label>
-            <input type="text" @bind="input.LastName"/>
-            <ValidationMessage For="@(() => input.LastName)"/>
+            <input type="text" @bind="input.LastName" />
+            <ValidationMessage For="@(() => input.LastName)" />
         </p>
         <p>
             <label asp-for="Email">Email</label>
-            <input type="text" @bind="input.Email"/>
-            <ValidationMessage For="@(() => input.Email)"/>
+            <input type="text" @bind="input.Email" />
+            <ValidationMessage For="@(() => input.Email)" />
         </p>
         <p>
             <label asp-for="Subject">Subject</label>
-            <input type="text" @bind="input.Subject"/>
-            <ValidationMessage For="@(() => input.Subject)"/>
+            <input type="text" @bind="input.Subject" />
+            <ValidationMessage For="@(() => input.Subject)" />
         </p>
         <p>
             <label asp-for="Message">Message</label>
-            <input type="text" @bind="input.Message"/>
-            <ValidationMessage For="@(() => input.Message)"/>
+            <input type="text" @bind="input.Message" />
+            <ValidationMessage For="@(() => input.Message)" />
         </p>
         <p>
-            <button type="submit" class="btn-primary" >Send</button>
+            <button type="submit" class="btn-primary">Send</button>
         </p>
-
     </EditForm>
 }
-
 
 @code {
 
@@ -70,9 +68,9 @@ else
     private string ErrorMessage { set; get; } = null;
 
     //binding our razor view directly to the input
-    private FeedbackUpsertInput input = new FeedbackUpsertInput();
+    private FeedbackInsertInput input = new FeedbackInsertInput();
 
-    public async void ValidSubmit()
+    public async Task ValidSubmit()
     {
         ErrorMessage = null;
         Result = null;
@@ -89,7 +87,6 @@ else
         {
             ErrorMessage = ex.Message;
         }
-
         StateHasChanged();
     }
 }
