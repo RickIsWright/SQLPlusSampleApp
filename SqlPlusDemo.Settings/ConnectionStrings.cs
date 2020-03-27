@@ -11,9 +11,7 @@ namespace SqlPlusDemo.Settings
         {
             get
             {
-                //Edit the server name and password
-
-                return "Server = {server}; Initial Catalog = SqlPlusDemo; User ID = sa; Password = {password}";
+                return "Server = (local); Database = SqlPlusDemo; Integrated Security = true;";
             }
         }
     }

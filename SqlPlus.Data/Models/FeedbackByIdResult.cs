@@ -6,29 +6,21 @@
 //     the code is regenerated.
 // </auto-generated>
 // ------------------------------------------------------------------------------
-
 using System;
-using System.Data.SqlClient;
 using System.Collections.Generic;
-using System.ComponentModel.DataAnnotations;
-
-namespace SqlPlus.Data.Default.Models
+namespace SqlPlus.Data.Models
 {
     /// <summary>
-    /// Output object for FeedbackUpsert method.
+    /// Result object for FeedbackById routine.
     /// </summary>
-    public class FeedbackUpsertOutput
-    {
-        public enum Returns
-        {
-             Inserted = 1,
-             NotFound = 0,
-             Modified = 2
+    public partial class FeedbackByIdResult
+	{
+            public int FeedbackId { set; get; }
+            public string LastName { set; get; }
+            public string FirstName { set; get; }
+            public string Email { set; get; }
+            public string Subject { set; get; }
+            public string Message { set; get; }
+            public DateTime Created { set; get; }
         }
-
-		public int? FeedbackId { set; get; }
-
-		public Returns ReturnValue { set; get; }
-
-    }
 }

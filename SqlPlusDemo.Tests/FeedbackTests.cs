@@ -1,5 +1,5 @@
 using NUnit.Framework;
-using SqlPlus.Data.Default.Models;
+using SqlPlus.Data.Models;
 using System;
 
 namespace SqlPlusDemo.Tests
@@ -9,6 +9,7 @@ namespace SqlPlusDemo.Tests
     /// </summary>
     public class FeedbackTests
     {
+
         /// <summary>
         /// Illustrating a valid call for insert - all properties pass validation
         /// and we leave the Feedback Id set to it's default 0
@@ -29,7 +30,7 @@ namespace SqlPlusDemo.Tests
             Assert.IsTrue(input.IsValid());
 
             //Call the service to get the output object
-            var output = ServiceFactory.DefaultService().FeedbackUpsert(input);
+            var output = ServiceFactory.Default().FeedbackUpsert(input);
 
             //We can test the return value against the enumeration for Inserted
             Assert.IsTrue(output.ReturnValue == FeedbackUpsertOutput.Returns.Inserted);
@@ -57,7 +58,7 @@ namespace SqlPlusDemo.Tests
             Assert.IsTrue(input.IsValid());
             
             //Call the service to get the output object
-            var output = ServiceFactory.DefaultService().FeedbackUpsert(input);
+            var output = ServiceFactory.Default().FeedbackUpsert(input);
 
             //We can test the return value against the enumeration for Modified
             Assert.IsTrue(output.ReturnValue == FeedbackUpsertOutput.Returns.Modified);
@@ -65,11 +66,55 @@ namespace SqlPlusDemo.Tests
         }
 
         /// <summary>
+        /// Illustrating the required tag - all properties are marked required
+        /// and Feedback Id has a default of zero.
+        /// </summary>
+        [Test]
+        [Order(3)]
+        public void FeedbackUpsertNullParameters()
+        {
+            var input = new FeedbackUpsertInput
+            {
+                //Email = "Alan@SQLPLUS.net",
+                //FirstName = "Alan",
+                //LastName = "Hyneman",
+                //Message = "So grateful for everyone providing feedback",
+                //Subject = "Thank You"
+            };
+
+            //Expecting a failure
+            Assert.IsTrue(input.IsValid() == false);
+
+            Utilities.WriteValidationErrors(input.ValidationResults);
+        }
+
+        /// <summary>
+        /// Illustrating the Email tag, email is not valid but all required fields pass
+        /// </summary>
+        [Test]
+        [Order(4)]
+        public void FeedbackUpsertInvalidEmail()
+        {
+            var input = new FeedbackUpsertInput
+            {
+                Email = "ThisIsNotAnEmail",
+                FirstName = "Alan",
+                LastName = "Hyneman",
+                Message = "So grateful for everyone providing feedback",
+                Subject = "Thank You"
+            };
+            //Expecting a failure
+            Assert.IsTrue(input.IsValid() == false);
+            Utilities.WriteValidationErrors(input.ValidationResults);
+        }
+
+
+        /// <summary>
         /// Illustrating a valid call for select by id
         /// Utilizing dbo.FeedbackById
         /// </summary>
         [Test]
-        [Order(3)]
+        [Order(5)]
         public void ByIdValid()
         {
             var input = new FeedbackByIdInput
@@ -79,7 +124,7 @@ namespace SqlPlusDemo.Tests
             Assert.IsTrue(input.IsValid());
 
             //Call the service to get the output object
-            var output = ServiceFactory.DefaultService().FeedbackById(input);
+            var output = ServiceFactory.Default().FeedbackById(input);
 
             //We can test the return value against the enumeration for Ok
             Assert.IsTrue(output.ReturnValue == FeedbackByIdOutput.Returns.Ok);
@@ -97,12 +142,24 @@ namespace SqlPlusDemo.Tests
             Console.WriteLine(feedback.Subject);
         }
 
+        [Test]
+        [Order(6)]
+        public void FeedbackTopCountTest()
+        {
+            var input = new FeedbackTopCountInput { Count = 1 };
+            var output = ServiceFactory.Default().FeedbackTopCount(input);
+
+            Assert.IsTrue(output.ResultData.Count > 0);
+            Console.WriteLine(output.ResultData[0].Email);
+            
+        }
+
         /// <summary>
         /// Illustrating a valid call for delete - we use the value from 
         /// the previously created record (1)
         /// </summary>
         [Test]
-        [Order(4)]
+        [Order(7)]
         public void ValidDelete()
         {
             var input = new FeedbackDeleteInput
@@ -112,61 +169,19 @@ namespace SqlPlusDemo.Tests
             Assert.IsTrue(input.IsValid());
 
             //Call the service to get the output object
-            var output = ServiceFactory.DefaultService().FeedbackDelete(input);
+            var output = ServiceFactory.Default().FeedbackDelete(input);
 
             //We can test the return value against the enumeration for Deleted
             Assert.IsTrue(output.ReturnValue == FeedbackDeleteOutput.Returns.Deleted);
 
         }
 
-
-        /// <summary>
-        /// Illustrating the required tag - all properties are marked required
-        /// and Feedback Id has a default of zero.
-        /// </summary>
         [Test]
-        [Order(2)]
-        public void FeedbackUpsertNullParameters()
+        [Order(8)]
+        public void GetDateTest()
         {
-            var input = new FeedbackUpsertInput
-            {
-                //Email = "Alan@SQLPLUS.net",
-                //FirstName = "Alan",
-                //LastName = "Hyneman",
-                //Message = "So grateful for everyone providing feedback",
-                //Subject = "Thank You"
-            };
-            
-            //Expecting a failure
-            Assert.IsTrue(input.IsValid() == false);
-
-            Utilities.WriteValidationErrors(input.ValidationResults);
+            SqlPlus.Data.Service service = new SqlPlus.Data.Service("Server = (local); Database = SqlPlusDemo; Integrated Security = true;");
+            var dateTime = ServiceFactory.Default().GetSQLDateTime();
         }
-
-        /// <summary>
-        /// Illustrating the Email tag, email is not valid but all required fields pass
-        /// </summary>
-        [Test]
-        [Order(3)]
-        public void FeedbackUpsertInvalidEmail()
-        {
-            var input = new FeedbackUpsertInput
-            {
-                Email = "ThisIsNotAnEmail",
-                FirstName = "Alan",
-                LastName = "Hyneman",
-                Message = "So grateful for everyone providing feedback",
-                Subject = "Thank You"
-            };
-            //Expecting a failure
-            Assert.IsTrue(input.IsValid() == false);
-            Utilities.WriteValidationErrors(input.ValidationResults);
-        }
-
-        [SetUp]
-        public void Setup()
-        {
-        }
-
     }
 }

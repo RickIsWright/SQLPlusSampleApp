@@ -1,4 +1,4 @@
-﻿@model SqlPlus.Data.Default.Models.FeedbackPagedOutput
+﻿@model SqlPlus.Data.Models.FeedbackPagedOutput
 
 @{
     ViewData["Title"] = "Index";
@@ -6,7 +6,7 @@
 
 <h1>Index</h1>
 
-@if (Model.ReturnValue == SqlPlus.Data.Default.Models.FeedbackPagedOutput.Returns.NoRecords)
+@if (Model.ReturnValue == SqlPlus.Data.Models.FeedbackPagedOutput.Returns.NoRecords)
 {
     <p>No records</p>
 }

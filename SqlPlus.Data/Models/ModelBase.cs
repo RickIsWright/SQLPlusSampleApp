@@ -13,7 +13,7 @@ using System.Data.SqlClient;
 using System.IO;
 using System;
 
-namespace SqlPlus.Data.Default.Models
+namespace SqlPlus.Data.Models
 {
     #region Valid Input
 

@@ -1,6 +1,6 @@
 ﻿using Microsoft.AspNetCore.Mvc;
-using SqlPlus.Data.Default;
-using SqlPlus.Data.Default.Models;
+using SqlPlus.Data;
+using SqlPlus.Data.Models;
 using SqlPlusDemo.Settings;
 
 namespace SqlPlusDemo.Web.Controllers

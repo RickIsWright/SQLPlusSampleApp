@@ -9,9 +9,9 @@
 
 using System;
 using System.Data.SqlClient;
-using SqlPlus.Data.Default.Models;
+using SqlPlus.Data.SampleNamespace.Models;
 
-namespace SqlPlus.Data.Default
+namespace SqlPlus.Data.SampleNamespace
 {
     /// <summary>
     /// This partial class for routines provides utility methods utilized by all the routine specific partials.

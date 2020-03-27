@@ -11,82 +11,64 @@ using System;
 using System.Data;
 using System.Data.SqlClient;
 using System.Collections.Generic;
-using SqlPlus.Data.Default.Models;
+using SqlPlus.Data.Models;
 
-namespace SqlPlus.Data.Default
+namespace SqlPlus.Data
 {
     public partial class Service
     {
 
         /// <summary>
-        /// Builds the command object for FeedbackDelete method.
+        /// Builds the command object for GetSQLDateTime method
         /// </summary>
-        /// <param name="cnn">The connection that will execute the procedure.</param>
-        /// <param name="input">FeedbackDeleteInput instance for loading parameter values.</param>
-        /// <returns>SqlCommand ready for execution.</returns>
-        private SqlCommand GetFeedbackDeleteCommand(SqlConnection cnn, IFeedbackDeleteInput input)
+        /// <param name="cnn">The connection that will execute the procedure</param>
+        /// <returns>SqlCommand ready for execution</returns>
+        private SqlCommand GetGetSQLDateTimeCommand(SqlConnection cnn)
         {
             SqlCommand result = new SqlCommand()
             {
                 CommandType = CommandType.StoredProcedure,
-                CommandText = "dbo.FeedbackDelete",
+                CommandText = "[dbo].[GetSQLDateTime]",
                 Connection = cnn
             };
 
             result.Parameters.Add(new SqlParameter()
             {
-                ParameterName = "@FeedbackId",
-                Direction = ParameterDirection.Input,
-                SqlDbType = SqlDbType.Int,
-                Scale = 0,
-                Precision = 10,
-				Value = input.FeedbackId
-            });
-
-            result.Parameters.Add(new SqlParameter()
-            {
                 ParameterName = "@ReturnValue",
                 Direction = ParameterDirection.ReturnValue,
-                SqlDbType = SqlDbType.Int,
-                Scale = 0,
-                Precision = 10,
+                SqlDbType = SqlDbType.DateTime,
+                Precision = 3,
                 Value = DBNull.Value
             });
 
             return result;
         }
-        private void SetFeedbackDeleteCommandOutputs(SqlCommand cmd, FeedbackDeleteOutput output)
+        private void SetGetSQLDateTimeCommandOutputs(SqlCommand cmd, GetSQLDateTimeOutput output)
         {
-            if(cmd.Parameters[1].Value != DBNull.Value)
+            if(cmd.Parameters[0].Value != DBNull.Value)
             {
-                output.ReturnValue = (FeedbackDeleteOutput.Returns)cmd.Parameters[1].Value;
+                output.ReturnValue = (DateTime?)cmd.Parameters[0].Value;
             }
         }
-        private void FeedbackDeleteCommand(SqlCommand cmd, FeedbackDeleteOutput output)
+        private void GetSQLDateTimeCommand(SqlCommand cmd, GetSQLDateTimeOutput output)
         {
             cmd.ExecuteNonQuery();
-		
-            SetFeedbackDeleteCommandOutputs(cmd, output);
-		}
+            SetGetSQLDateTimeCommandOutputs(cmd, output);
+        }
 
         /// <summary>
-        /// Deletes single row from dbo.Feedback table by identity column.
-        /// SQL+ Routine: dbo.FeedbackDelete - Authored by Alan Hyneman
+        /// Gets the current time from the server
+        /// SQL+ Routine: dbo.GetSQLDateTime - Authored by Alan Hyneman
         /// </summary>
-        public FeedbackDeleteOutput FeedbackDelete(IFeedbackDeleteInput input)
+        public GetSQLDateTimeOutput GetSQLDateTime()
         {
-            if (!input.IsValid())
-            {
-		        throw new ArgumentException("FeedbackDeleteInput fails validation - use the FeedbackDeleteInput.IsValid() method prior to passing the input argument to the FeedbackDelete method.", "input");
-            }
-			
-            FeedbackDeleteOutput output = new FeedbackDeleteOutput();
+            GetSQLDateTimeOutput output = new GetSQLDateTimeOutput();
 			if(sqlConnection != null)
             {
-                using (SqlCommand cmd = GetFeedbackDeleteCommand(sqlConnection, input))
+                using (SqlCommand cmd = GetGetSQLDateTimeCommand(sqlConnection))
                 {
                     cmd.Transaction = sqlTransaction;
-                    FeedbackDeleteCommand(cmd, output);
+                    GetSQLDateTimeCommand(cmd, output);
                 }
                 return output;
             }
@@ -99,10 +81,10 @@ namespace SqlPlus.Data.Default
                 try
                 {
                     using (SqlConnection cnn = new SqlConnection(connectionString))
-                    using (SqlCommand cmd = GetFeedbackDeleteCommand(cnn, input))
+                    using (SqlCommand cmd = GetGetSQLDateTimeCommand(cnn))
                     {
                         cnn.Open();
-						FeedbackDeleteCommand(cmd, output);
+						GetSQLDateTimeCommand(cmd, output);
                         cnn.Close();
                     }
 					break;

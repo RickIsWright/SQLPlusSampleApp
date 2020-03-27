@@ -1,0 +1,23 @@
+/*
+    DatabaseConnection.json provides the connection to the build source database.
+    
+    1. Provide the database type.
+       a. MSSQLServer for Microsoft SQL Server - full support.
+       b. Postgres for PostgreSQL - future functionality.
+       c. MySQL for MySQL - future functionality.
+       d. Oracle for Oracle - future functionality.
+
+    2. Provde the connection string
+       a. This connection needs elevated permissions to create temporary database objects.
+
+    3. Save and close the file.
+
+    *NOTE this file contains sensitive information - be sure to add this to the ignore section of your source control*
+
+    You may delete these comments if you like.
+*/
+
+{
+    "DatabaseType": "MSSQLServer",
+    "ConnectionString": "Server = (local); Database = SQLPlusDemo; Integrated Security = true;"
+}

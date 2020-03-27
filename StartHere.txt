@@ -1,11 +1,9 @@
-This sample project illustrates the basic functionality of SQL+.NET code generation, as well
-as illustrates how the generated code can be utilized in various client applications.
+This sample project illustrates the basic functionality of the SQL+.NET code generation, as well
+as how the generated code can be utilized in various client applications.
 
-*NOTE
-
-1) SQL+.NET is a SQL first ORM, so you need a database. Use the dbscript.txt to create that database 
-	and the DB objects used moving forward. The SqlPus.Data project contains the code that was 
-	generated using SQL+.NET - feel free to explore the generated code.
+1) SQL+.NET is a SQL first ORM, so you need a database. Use the dbscript.sql to create that database 
+	and database objects used moving forward. The SqlPus.Data project is the class-library project that is the 
+	destination for the generated code based on the functions and procedures created in step 1.
 
 2) Edit the connection string in the project SqlPlusDemo.Settings project at ConnectionStrings.cs pointing 
 	it to the database you created in step 1

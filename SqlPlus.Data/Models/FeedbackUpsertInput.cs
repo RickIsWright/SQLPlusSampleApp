@@ -10,7 +10,7 @@
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 
-namespace SqlPlus.Data.Default.Models
+namespace SqlPlus.Data.Models
 {
     /// <summary>
     /// Interface for FeedbackUpsertInput object.
@@ -44,7 +44,6 @@ namespace SqlPlus.Data.Default.Models
         public string FirstName { set; get; }
 
         [EmailAddress]
-        [DataType(DataType.EmailAddress)]
         [MaxLength(64)]
         [Required(AllowEmptyStrings = false)]
         public string Email { set; get; }

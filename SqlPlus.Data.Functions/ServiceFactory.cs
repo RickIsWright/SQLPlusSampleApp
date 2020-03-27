@@ -1,6 +1,5 @@
 ﻿using Microsoft.Extensions.Logging;
-using SqlPlus.Data.Default;
-using SqlPlus.Data.Default.Models;
+using SqlPlus.Data.Models;
 using SqlPlusDemo.Settings;
 using System;
 using System.Collections.Generic;

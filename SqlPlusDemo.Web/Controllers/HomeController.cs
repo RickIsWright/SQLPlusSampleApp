@@ -1,7 +1,7 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
-using SqlPlus.Data.Default;
-using SqlPlus.Data.Default.Models;
+using SqlPlus.Data;
+using SqlPlus.Data.Models;
 using SqlPlusDemo.Settings;
 using SqlPlusDemo.Web.Models;
 using System.ComponentModel.DataAnnotations;

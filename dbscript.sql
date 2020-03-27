@@ -25,51 +25,6 @@ CREATE TABLE [dbo].[Feedback](
 ) ON [PRIMARY]
 GO
 
-/****** Object:  StoredProcedure [dbo].[FeedbackById]    Script Date: 12/1/2019 7:25:03 PM ******/
-SET ANSI_NULLS ON
-GO
-SET QUOTED_IDENTIFIER ON
-GO
---+SqlPlusRoutine
-    --&Author=Alan Hyneman
-    --&Comment=Selects single row from dbo.Feedback table by identity column.
-    --&SelectType=SingleRow
---+SqlPlusRoutine
-CREATE PROCEDURE [dbo].[FeedbackById]
-(
-    --+Required
-    --+Comment=FeedbackId
-    @FeedbackId int
-)
-AS
-BEGIN
- 
-    SET NOCOUNT ON;
- 
-    SELECT
-        FeedbackId,
-        LastName,
-        FirstName,
-        Email,
-        Subject,
-        Message,
-        Created
-    FROM
-        dbo.Feedback
-    WHERE
-        FeedbackId = @FeedbackId;
- 
-    IF @@ROWCOUNT = 0
-    BEGIN
-        --+Return=NotFound
-        RETURN 0;
-    END;
- 
-    --+Return=Ok
-    RETURN 1;
- 
-END;
-GO
 /****** Object:  StoredProcedure [dbo].[FeedbackDelete]    Script Date: 12/1/2019 7:25:03 PM ******/
 SET ANSI_NULLS ON
 GO
@@ -266,3 +221,44 @@ BEGIN
  
 END;
 GO
+/****** Object:  StoredProcedure [dbo].[FeedbackUpsert]    Script Date: 12/1/2019 7:25:03 PM ******/
+SET ANSI_NULLS ON
+GO
+SET QUOTED_IDENTIFIER ON
+GO
+
+--+SqlPlusRoutine
+    --&SelectType=NonQuery
+    --&Comment=Gets the current time from the server
+    --&Author=Alan Hyneman
+--+SqlPlusRoutine
+CREATE FUNCTION dbo.GetSQLDateTime()
+RETURNS datetime
+AS
+BEGIN
+	RETURN GetDate();
+END;
+
+GO
+/****** Object:  StoredProcedure [dbo].[FeedbackUpsert]    Script Date: 12/1/2019 7:25:03 PM ******/
+SET ANSI_NULLS ON
+GO
+SET QUOTED_IDENTIFIER ON
+GO
+
+--+SqlPlusRoutine
+    --&SelectType=MultiRow
+    --&Comment=Comment
+    --&Author=Author
+--+SqlPlusRoutine
+ALTER FUNCTION [dbo].[FeedbackTopCount]
+(	
+	@Count int
+)
+RETURNS TABLE 
+AS
+RETURN 
+(
+	SELECT TOP (@Count) * FROM dbo.Feedback
+)
+

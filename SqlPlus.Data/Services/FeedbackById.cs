@@ -11,56 +11,36 @@ using System;
 using System.Data;
 using System.Data.SqlClient;
 using System.Collections.Generic;
-using SqlPlus.Data.Default.Models;
+using SqlPlus.Data.Models;
 
-namespace SqlPlus.Data.Default
+namespace SqlPlus.Data
 {
     public partial class Service
     {
 
         /// <summary>
-        /// Builds the command object for FeedbackPaged method.
+        /// Builds the command object for FeedbackById method.
         /// </summary>
         /// <param name="cnn">The connection that will execute the procedure.</param>
-        /// <param name="input">FeedbackPagedInput instance for loading parameter values.</param>
+        /// <param name="input">FeedbackByIdInput instance for loading parameter values.</param>
         /// <returns>SqlCommand ready for execution.</returns>
-        private SqlCommand GetFeedbackPagedCommand(SqlConnection cnn, IFeedbackPagedInput input)
+        private SqlCommand GetFeedbackByIdCommand(SqlConnection cnn, IFeedbackByIdInput input)
         {
             SqlCommand result = new SqlCommand()
             {
                 CommandType = CommandType.StoredProcedure,
-                CommandText = "dbo.FeedbackPaged",
+                CommandText = "[dbo].[FeedbackById]",
                 Connection = cnn
             };
 
             result.Parameters.Add(new SqlParameter()
             {
-                ParameterName = "@PageSize",
+                ParameterName = "@FeedbackId",
                 Direction = ParameterDirection.Input,
                 SqlDbType = SqlDbType.Int,
                 Scale = 0,
                 Precision = 10,
-				Value = input.PageSize
-            });
-
-            result.Parameters.Add(new SqlParameter()
-            {
-                ParameterName = "@PageNumber",
-                Direction = ParameterDirection.Input,
-                SqlDbType = SqlDbType.Int,
-                Scale = 0,
-                Precision = 10,
-				Value = input.PageNumber
-            });
-
-            result.Parameters.Add(new SqlParameter()
-            {
-                ParameterName = "@PageCount",
-                Direction = ParameterDirection.Output,
-                SqlDbType = SqlDbType.Int,
-                Scale = 0,
-                Precision = 10,
-                Value = DBNull.Value
+				Value = input.FeedbackId
             });
 
             result.Parameters.Add(new SqlParameter()
@@ -75,21 +55,17 @@ namespace SqlPlus.Data.Default
 
             return result;
         }
-        private void SetFeedbackPagedCommandOutputs(SqlCommand cmd, FeedbackPagedOutput output)
+        private void SetFeedbackByIdCommandOutputs(SqlCommand cmd, FeedbackByIdOutput output)
         {
-            if(cmd.Parameters[2].Value != DBNull.Value)
+            if(cmd.Parameters[1].Value != DBNull.Value)
             {
-                output.PageCount = (int?)cmd.Parameters[2].Value;
-            }
-            if(cmd.Parameters[3].Value != DBNull.Value)
-            {
-                output.ReturnValue = (FeedbackPagedOutput.Returns)cmd.Parameters[3].Value;
+                output.ReturnValue = (FeedbackByIdOutput.Returns)cmd.Parameters[1].Value;
             }
         }
 
-        private FeedbackPagedResult GetFeedbackPagedResultFromReader(SqlDataReader rdr)
+        private FeedbackByIdResult GetFeedbackByIdResultFromReader(SqlDataReader rdr)
         {
-            FeedbackPagedResult result = new FeedbackPagedResult();
+            FeedbackByIdResult result = new FeedbackByIdResult();
 
             result.FeedbackId = rdr.GetInt32(0);
 
@@ -109,39 +85,39 @@ namespace SqlPlus.Data.Default
         }
 
 
-        private void FeedbackPagedCommand(SqlCommand cmd, FeedbackPagedOutput output)
+        private void FeedbackByIdCommand(SqlCommand cmd, FeedbackByIdOutput output)
         {
-		
             using (SqlDataReader rdr = cmd.ExecuteReader())
             {
-                output.ResultData = new List<FeedbackPagedResult>();
-                while(rdr.Read())
+                if(rdr.Read())
                 {
-                    output.ResultData.Add(GetFeedbackPagedResultFromReader(rdr));
+                    output.ResultData = GetFeedbackByIdResultFromReader(rdr);
                 }
                 rdr.Close();
             }
-            SetFeedbackPagedCommandOutputs(cmd, output);
-		}
+            SetFeedbackByIdCommandOutputs(cmd, output);
+        }
 
         /// <summary>
-        /// Selects page results from dbo.Feedback table.
-        /// SQL+ Routine: dbo.FeedbackPaged - Authored by Alan Hyneman
+        /// Selects single row from dbo.Feedback table by identity column.
+        /// SQL+ Routine: dbo.FeedbackById - Authored by Alan Hyneman
         /// </summary>
-        public FeedbackPagedOutput FeedbackPaged(IFeedbackPagedInput input)
+        public FeedbackByIdOutput FeedbackById(IFeedbackByIdInput input, bool bypassValidation = false)
         {
-            if (!input.IsValid())
+            if(!bypassValidation)
             {
-		        throw new ArgumentException("FeedbackPagedInput fails validation - use the FeedbackPagedInput.IsValid() method prior to passing the input argument to the FeedbackPaged method.", "input");
+                if (!input.IsValid())
+                {
+		            throw new ArgumentException("FeedbackByIdInput fails validation - use the FeedbackByIdInput.IsValid() method prior to passing the input argument to the FeedbackById method.", "input");
+                }
             }
-			
-            FeedbackPagedOutput output = new FeedbackPagedOutput();
+            FeedbackByIdOutput output = new FeedbackByIdOutput();
 			if(sqlConnection != null)
             {
-                using (SqlCommand cmd = GetFeedbackPagedCommand(sqlConnection, input))
+                using (SqlCommand cmd = GetFeedbackByIdCommand(sqlConnection, input))
                 {
                     cmd.Transaction = sqlTransaction;
-                    FeedbackPagedCommand(cmd, output);
+                    FeedbackByIdCommand(cmd, output);
                 }
                 return output;
             }
@@ -154,10 +130,10 @@ namespace SqlPlus.Data.Default
                 try
                 {
                     using (SqlConnection cnn = new SqlConnection(connectionString))
-                    using (SqlCommand cmd = GetFeedbackPagedCommand(cnn, input))
+                    using (SqlCommand cmd = GetFeedbackByIdCommand(cnn, input))
                     {
                         cnn.Open();
-						FeedbackPagedCommand(cmd, output);
+						FeedbackByIdCommand(cmd, output);
                         cnn.Close();
                     }
 					break;

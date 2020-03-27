@@ -10,28 +10,23 @@
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 
-namespace SqlPlus.Data.Default.Models
+namespace SqlPlus.Data.Models
 {
     /// <summary>
-    /// Interface for FeedbackPagedInput object.
+    /// Interface for FeedbackDeleteInput object.
     /// </summary>
-    public interface IFeedbackPagedInput : IValidInput
+    public interface IFeedbackDeleteInput : IValidInput
     {
-        int? PageSize { set; get; }
-        int? PageNumber { set; get; }
+        int? FeedbackId { set; get; }
     }
 
     /// <summary>
-    /// Input object for FeedbackPaged method.
+    /// Input object for FeedbackDelete method.
     /// </summary>
-    public class FeedbackPagedInput : ValidInput, IFeedbackPagedInput
+    public class FeedbackDeleteInput : ValidInput, IFeedbackDeleteInput
     {
-        [Range(typeof(int), "10", "50")]
         [Required(AllowEmptyStrings = false)]
-        public int? PageSize { set; get; }  = (int?)25;
-
-        [Required(AllowEmptyStrings = false)]
-        public int? PageNumber { set; get; }  = (int?)1;
+        public int? FeedbackId { set; get; }
 
     }
 } 

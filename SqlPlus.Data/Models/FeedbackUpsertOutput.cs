@@ -12,26 +12,23 @@ using System.Data.SqlClient;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 
-namespace SqlPlus.Data.Default.Models
+namespace SqlPlus.Data.Models
 {
     /// <summary>
-    /// Output object for FeedbackPaged method.
+    /// Output object for FeedbackUpsert method.
     /// </summary>
-    public class FeedbackPagedOutput
+    public partial class FeedbackUpsertOutput
     {
         public enum Returns
         {
-             NoRecords = 0,
-             Ok = 1
+             Inserted = 1,
+             NotFound = 0,
+             Modified = 2
         }
 
-		public int? PageCount { set; get; }
+		public int? FeedbackId { set; get; }
 
 		public Returns ReturnValue { set; get; }
 
-        /// <summary>
-        /// List of FeedbackPagedResult results.
-        /// </summary>
-        public List<FeedbackPagedResult> ResultData { set; get; }
     }
 }

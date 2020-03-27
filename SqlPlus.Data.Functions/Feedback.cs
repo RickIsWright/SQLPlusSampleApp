@@ -4,7 +4,7 @@ using Microsoft.Azure.WebJobs;
 using Microsoft.Azure.WebJobs.Extensions.Http;
 using Microsoft.Extensions.Logging;
 using Newtonsoft.Json;
-using SqlPlus.Data.Default.Models;
+using SqlPlus.Data.Models;
 using System.IO;
 
 /// <summary>

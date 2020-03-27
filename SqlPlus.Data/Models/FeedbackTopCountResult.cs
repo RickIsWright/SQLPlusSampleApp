@@ -8,19 +8,19 @@
 // ------------------------------------------------------------------------------
 using System;
 using System.Collections.Generic;
-namespace SqlPlus.Data.Default.Models
+namespace SqlPlus.Data.Models
 {
     /// <summary>
-    /// Result object for FeedbackById routine.
+    /// Result object for FeedbackTopCount routine.
     /// </summary>
-    public class FeedbackByIdResult
+    public partial class FeedbackTopCountResult
 	{
-        public int FeedbackId { set; get; }
-        public string LastName { set; get; }
-        public string FirstName { set; get; }
-        public string Email { set; get; }
-        public string Subject { set; get; }
-        public string Message { set; get; }
-        public DateTime Created { set; get; }
-    }
+            public int FeedbackId { set; get; }
+            public string LastName { set; get; }
+            public string FirstName { set; get; }
+            public string Email { set; get; }
+            public string Subject { set; get; }
+            public string Message { set; get; }
+            public DateTime Created { set; get; }
+        }
 }

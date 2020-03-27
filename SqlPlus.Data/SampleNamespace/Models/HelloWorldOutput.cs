@@ -12,20 +12,24 @@ using System.Data.SqlClient;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 
-namespace SqlPlus.Data.Default.Models
+namespace SqlPlus.Data.SampleNamespace.Models
 {
     /// <summary>
-    /// Output object for FeedbackDelete method.
+    /// Output object for HelloWorld method.
     /// </summary>
-    public class FeedbackDeleteOutput
+    public partial class HelloWorldOutput
     {
         public enum Returns
         {
              NotFound = 0,
-             Deleted = 1
+             Ok = 1
         }
 
 		public Returns ReturnValue { set; get; }
 
+        /// <summary>
+        /// HelloWorldResult result.
+        /// </summary>
+        public HelloWorldResult ResultData { set; get; }
     }
 }

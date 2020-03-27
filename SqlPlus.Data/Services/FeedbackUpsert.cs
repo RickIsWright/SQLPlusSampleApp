@@ -11,9 +11,9 @@ using System;
 using System.Data;
 using System.Data.SqlClient;
 using System.Collections.Generic;
-using SqlPlus.Data.Default.Models;
+using SqlPlus.Data.Models;
 
-namespace SqlPlus.Data.Default
+namespace SqlPlus.Data
 {
     public partial class Service
     {
@@ -29,7 +29,7 @@ namespace SqlPlus.Data.Default
             SqlCommand result = new SqlCommand()
             {
                 CommandType = CommandType.StoredProcedure,
-                CommandText = "dbo.FeedbackUpsert",
+                CommandText = "[dbo].[FeedbackUpsert]",
                 Connection = cnn
             };
 
@@ -114,21 +114,22 @@ namespace SqlPlus.Data.Default
         private void FeedbackUpsertCommand(SqlCommand cmd, FeedbackUpsertOutput output)
         {
             cmd.ExecuteNonQuery();
-		
             SetFeedbackUpsertCommandOutputs(cmd, output);
-		}
+        }
 
         /// <summary>
         /// Inserts a new record into the dbo.Feedback table.
         /// SQL+ Routine: dbo.FeedbackUpsert - Authored by Alan Hyneman
         /// </summary>
-        public FeedbackUpsertOutput FeedbackUpsert(IFeedbackUpsertInput input)
+        public FeedbackUpsertOutput FeedbackUpsert(IFeedbackUpsertInput input, bool bypassValidation = false)
         {
-            if (!input.IsValid())
+            if(!bypassValidation)
             {
-		        throw new ArgumentException("FeedbackUpsertInput fails validation - use the FeedbackUpsertInput.IsValid() method prior to passing the input argument to the FeedbackUpsert method.", "input");
+                if (!input.IsValid())
+                {
+		            throw new ArgumentException("FeedbackUpsertInput fails validation - use the FeedbackUpsertInput.IsValid() method prior to passing the input argument to the FeedbackUpsert method.", "input");
+                }
             }
-			
             FeedbackUpsertOutput output = new FeedbackUpsertOutput();
 			if(sqlConnection != null)
             {

@@ -1,0 +1,51 @@
+
+/*
+    BuildDefinition.json provides information to build your class library.
+
+    1. Edit the template value for the build output of your liking.
+       a. DotNetFramework - for .net framework projects.
+       b. DotNetCore - for .net core projects.
+       c. Documentation - future reference.
+
+    2. Build Schemas identify the schemas in the database that should be built, as well as the namespace that schema will generate.
+       a. Enter the database schema for SCHEMA, and the desired value for the NAMESPACE.
+       b. Repeat the process for all schemas you wish to build.
+       *Note that you can use the value + for the namespace to build directly into the project namespace.*
+
+    3. Build Routines identify specific routines to be built in cases where an entire schema build is not desired.
+       a. Enter the SCHEMA, NAMESPACE, and ROUTINE values.
+       b. Repeat the process for all the routines you wish to build.
+       *Note that you can use the value + for the namespace to build directly into the project namespace.*
+
+    4. Remove any unnecessary BuildSchemas and BuildRoutines array items.
+
+    5. Edit the EnumQueries
+       a. Provide a name for the enumeration.
+       b. Provide the source schema and table name.
+       c. Provide the table column for the enumeration string constant
+       d. Provide the table column for the enumeration value
+       e. Provide an optional filter.
+
+    6. Remove any unnecessary EnumQueries array items.
+
+    7. Edit the StaticQueries
+       a. Provide the name for the static data.
+       b. Provide the query for the static data.
+
+    8. Save and close the file.
+    
+  
+    For additional information for setting up your project build vist www.SQLPLUS.net
+
+    You may delete these comments if you like.
+*/
+
+{
+  "Template": "DotNetCore",
+  "BuildSchemas": [
+    {
+      "Schema": "dbo",
+      "Namespace": "+"
+    }
+  ]
+}

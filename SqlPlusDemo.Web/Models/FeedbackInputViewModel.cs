@@ -1,4 +1,4 @@
-﻿using SqlPlus.Data.Default.Models;
+﻿using SqlPlus.Data.Models;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;

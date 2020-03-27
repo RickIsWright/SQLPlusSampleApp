@@ -7,29 +7,20 @@
 // </auto-generated>
 // ------------------------------------------------------------------------------
 
+using System;
+using System.Data.SqlClient;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 
-namespace SqlPlus.Data.Default.Models
+namespace SqlPlus.Data.Models
 {
     /// <summary>
-    /// Interface for FeedbackByIdInput object.
+    /// Output object for GetSQLDateTime method.
     /// </summary>
-    public interface IFeedbackByIdInput : IValidInput
+    public partial class GetSQLDateTimeOutput
     {
-        int? FeedbackId { set; get; }
-    }
 
-    /// <summary>
-    /// Input object for FeedbackById method.
-    /// </summary>
-    public class FeedbackByIdInput : ValidInput, IFeedbackByIdInput
-    {
-        /// <summary>
-        /// FeedbackId
-        /// </summary>
-        [Required(AllowEmptyStrings = false)]
-        public int? FeedbackId { set; get; }
+		public DateTime? ReturnValue { set; get; }
 
     }
-} 
+}

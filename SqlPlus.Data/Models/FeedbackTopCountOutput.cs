@@ -7,26 +7,22 @@
 // </auto-generated>
 // ------------------------------------------------------------------------------
 
+using System;
+using System.Data.SqlClient;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 
-namespace SqlPlus.Data.Default.Models
+namespace SqlPlus.Data.Models
 {
     /// <summary>
-    /// Interface for FeedbackDeleteInput object.
+    /// Output object for FeedbackTopCount method.
     /// </summary>
-    public interface IFeedbackDeleteInput : IValidInput
+    public partial class FeedbackTopCountOutput
     {
-        int? FeedbackId { set; get; }
-    }
 
-    /// <summary>
-    /// Input object for FeedbackDelete method.
-    /// </summary>
-    public class FeedbackDeleteInput : ValidInput, IFeedbackDeleteInput
-    {
-        [Required(AllowEmptyStrings = false)]
-        public int? FeedbackId { set; get; }
-
+        /// <summary>
+        /// List of FeedbackTopCountResult results.
+        /// </summary>
+        public List<FeedbackTopCountResult> ResultData { set; get; }
     }
-} 
+}

@@ -11,112 +11,107 @@ using System;
 using System.Data;
 using System.Data.SqlClient;
 using System.Collections.Generic;
-using SqlPlus.Data.Default.Models;
+using SqlPlus.Data.SampleNamespace.Models;
 
-namespace SqlPlus.Data.Default
+namespace SqlPlus.Data.SampleNamespace
 {
     public partial class Service
     {
 
         /// <summary>
-        /// Builds the command object for FeedbackById method.
+        /// Builds the command object for HelloWorld method.
         /// </summary>
         /// <param name="cnn">The connection that will execute the procedure.</param>
-        /// <param name="input">FeedbackByIdInput instance for loading parameter values.</param>
+        /// <param name="input">HelloWorldInput instance for loading parameter values.</param>
         /// <returns>SqlCommand ready for execution.</returns>
-        private SqlCommand GetFeedbackByIdCommand(SqlConnection cnn, IFeedbackByIdInput input)
+        private SqlCommand GetHelloWorldCommand(SqlConnection cnn, IHelloWorldInput input)
         {
             SqlCommand result = new SqlCommand()
             {
-                CommandType = CommandType.StoredProcedure,
-                CommandText = "dbo.FeedbackById",
+                CommandType = CommandType.Text,
+                CommandText = @"
+SELECT CONCAT('Hello ', @Name) AS WelcomMessage;
+IF @@ROWCOUNT = 0
+BEGIN
+SET @ReturnValue=0;
+END;
+ELSE
+BEGIN
+SET @ReturnValue = 1;
+END;",
                 Connection = cnn
             };
 
             result.Parameters.Add(new SqlParameter()
             {
-                ParameterName = "@FeedbackId",
+                ParameterName = "@Name",
                 Direction = ParameterDirection.Input,
-                SqlDbType = SqlDbType.Int,
-                Scale = 0,
-                Precision = 10,
-				Value = input.FeedbackId
+                SqlDbType = SqlDbType.VarChar,
+                Size = 32,
+				Value = input.Name
             });
 
             result.Parameters.Add(new SqlParameter()
             {
                 ParameterName = "@ReturnValue",
-                Direction = ParameterDirection.ReturnValue,
+                Direction = ParameterDirection.Output,
                 SqlDbType = SqlDbType.Int,
-                Scale = 0,
-                Precision = 10,
                 Value = DBNull.Value
             });
 
             return result;
         }
-        private void SetFeedbackByIdCommandOutputs(SqlCommand cmd, FeedbackByIdOutput output)
+        private void SetHelloWorldCommandOutputs(SqlCommand cmd, HelloWorldOutput output)
         {
             if(cmd.Parameters[1].Value != DBNull.Value)
             {
-                output.ReturnValue = (FeedbackByIdOutput.Returns)cmd.Parameters[1].Value;
+                output.ReturnValue = (HelloWorldOutput.Returns)cmd.Parameters[1].Value;
             }
         }
 
-        private FeedbackByIdResult GetFeedbackByIdResultFromReader(SqlDataReader rdr)
+        private HelloWorldResult GetHelloWorldResultFromReader(SqlDataReader rdr)
         {
-            FeedbackByIdResult result = new FeedbackByIdResult();
+            HelloWorldResult result = new HelloWorldResult();
 
-            result.FeedbackId = rdr.GetInt32(0);
-
-            result.LastName = rdr.GetString(1);
-
-            result.FirstName = rdr.GetString(2);
-
-            result.Email = rdr.GetString(3);
-
-            result.Subject = rdr.GetString(4);
-
-            result.Message = rdr.GetString(5);
-
-            result.Created = rdr.GetDateTime(6);
+            result.WelcomMessage = rdr.GetString(0);
 
             return result;
         }
 
 
-        private void FeedbackByIdCommand(SqlCommand cmd, FeedbackByIdOutput output)
+        private void HelloWorldCommand(SqlCommand cmd, HelloWorldOutput output)
         {
             using (SqlDataReader rdr = cmd.ExecuteReader())
             {
                 if(rdr.Read())
                 {
-                    output.ResultData = GetFeedbackByIdResultFromReader(rdr);
+                    output.ResultData = GetHelloWorldResultFromReader(rdr);
                 }
                 rdr.Close();
             }
-		
-            SetFeedbackByIdCommandOutputs(cmd, output);
-		}
+            SetHelloWorldCommandOutputs(cmd, output);
+        }
 
         /// <summary>
-        /// Selects single row from dbo.Feedback table by identity column.
-        /// SQL+ Routine: dbo.FeedbackById - Authored by Alan Hyneman
+        /// Comment
+        /// SQL+ Routine: .HelloWorld - Authored by Author
         /// </summary>
-        public FeedbackByIdOutput FeedbackById(IFeedbackByIdInput input)
+        public HelloWorldOutput HelloWorld(IHelloWorldInput input, bool bypassValidation = false)
         {
-            if (!input.IsValid())
+            if(!bypassValidation)
             {
-		        throw new ArgumentException("FeedbackByIdInput fails validation - use the FeedbackByIdInput.IsValid() method prior to passing the input argument to the FeedbackById method.", "input");
+                if (!input.IsValid())
+                {
+		            throw new ArgumentException("HelloWorldInput fails validation - use the HelloWorldInput.IsValid() method prior to passing the input argument to the HelloWorld method.", "input");
+                }
             }
-			
-            FeedbackByIdOutput output = new FeedbackByIdOutput();
+            HelloWorldOutput output = new HelloWorldOutput();
 			if(sqlConnection != null)
             {
-                using (SqlCommand cmd = GetFeedbackByIdCommand(sqlConnection, input))
+                using (SqlCommand cmd = GetHelloWorldCommand(sqlConnection, input))
                 {
                     cmd.Transaction = sqlTransaction;
-                    FeedbackByIdCommand(cmd, output);
+                    HelloWorldCommand(cmd, output);
                 }
                 return output;
             }
@@ -129,10 +124,10 @@ namespace SqlPlus.Data.Default
                 try
                 {
                     using (SqlConnection cnn = new SqlConnection(connectionString))
-                    using (SqlCommand cmd = GetFeedbackByIdCommand(cnn, input))
+                    using (SqlCommand cmd = GetHelloWorldCommand(cnn, input))
                     {
                         cnn.Open();
-						FeedbackByIdCommand(cmd, output);
+						HelloWorldCommand(cmd, output);
                         cnn.Close();
                     }
 					break;

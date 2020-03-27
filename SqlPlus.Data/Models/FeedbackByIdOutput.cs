@@ -12,12 +12,12 @@ using System.Data.SqlClient;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 
-namespace SqlPlus.Data.Default.Models
+namespace SqlPlus.Data.Models
 {
     /// <summary>
     /// Output object for FeedbackById method.
     /// </summary>
-    public class FeedbackByIdOutput
+    public partial class FeedbackByIdOutput
     {
         public enum Returns
         {
