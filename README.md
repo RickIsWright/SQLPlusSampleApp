@@ -1,4 +1,14 @@
 # SQL+ .NET ORM Sample Application
-Illustrates how code is generated, and how to use the services in various client applications including a test project, MVC, and Blazor.
+Illustrates how code is generated from any of the available build techniques including:
+- Scalar Functions
+- Table Functions
+- Stored Procedures
+- SQL Statements (Concrete Queries)
 
-Included in the solutions folder are scripts for setting up the data base and seeding data, as well as instructions on setting up the project and running the examples.
+Illustrates how the generated libraries can be utilized in a variety of client applications including:
+- Unit Test Project
+- MVC Application
+- Azure Functions
+- Blazor Application (cobined with the included azure functions)
+
+This project is available to all SQL+ .NET subscribers.
