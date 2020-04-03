@@ -19,7 +19,6 @@ namespace SqlPlus.Data.Models
     /// </summary>
     public partial class FeedbackTableMultiOutput
     {
-
         /// <summary>
         /// List of FeedbackTableMultiResult results.
         /// </summary>

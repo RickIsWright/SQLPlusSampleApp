@@ -24,8 +24,6 @@ namespace SqlPlus.Data.Models
              NotFound = 0,
              Ok = 1
         }
-
 		public Returns ReturnValue { set; get; }
-
     }
 }

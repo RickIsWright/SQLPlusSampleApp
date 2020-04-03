@@ -24,11 +24,8 @@ namespace SqlPlus.Data.Models
              NoRecords = 0,
              Ok = 1
         }
-
 		public int? PageCount { set; get; }
-
 		public Returns ReturnValue { set; get; }
-
         /// <summary>
         /// List of FeedbackPagedResult results.
         /// </summary>

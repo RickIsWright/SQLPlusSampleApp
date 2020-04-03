@@ -58,6 +58,9 @@ as how the generated code can be utilized in various client applications.
 	a) Notice that the input models in the blazor app are only linked to the project so we don't need to include the entire class library.
 	b) Try submitting feedback - and notice we added no validation to our calls as this is all handled by the models.
 
+	**In the event the blazor application throws an exception or cannot connect to the azure function application, simply open another 
+	instance of visual studio and run the Blazor application in that instance.**
+
 **************************************************************************************************************
 
 Greetings, I'm alan hyneman, the creator of SQL+.NET, and I hope after exploring these sample applications
@@ -65,10 +68,9 @@ you've gained some insight as to how usefull SQL+ truly is. It's much more than 
 complete system for building high-performance data services that are useful in any client application.
 
 What you will find when building services in this fasion, is that in addtion to building services that just perform better,
-the object model that is generated helps speed up productive along the entire development chain.
+the object model that is generated helps speed up productivity throughout the entire development chain.
 
 If you like SQL+ as much as we do, please help us help you by spreading the word.
-
 
 web: www.SqlPlus.net
 twitter: @SQLPLUSDOTNET

@@ -14,6 +14,6 @@ namespace SqlPlus.Data.SampleNamespace.Models
     /// </summary>
     public partial class HelloWorldResult
 	{
-            public string WelcomMessage { set; get; }
-        }
+        public string WelcomMessage { set; get; }
+    }
 }

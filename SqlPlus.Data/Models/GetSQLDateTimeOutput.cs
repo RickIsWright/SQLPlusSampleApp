@@ -19,8 +19,6 @@ namespace SqlPlus.Data.Models
     /// </summary>
     public partial class GetSQLDateTimeOutput
     {
-
 		public DateTime? ReturnValue { set; get; }
-
     }
 }

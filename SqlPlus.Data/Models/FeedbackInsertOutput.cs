@@ -23,10 +23,7 @@ namespace SqlPlus.Data.Models
         {
              Ok = 1
         }
-
 		public int? FeedbackId { set; get; }
-
 		public Returns ReturnValue { set; get; }
-
     }
 }

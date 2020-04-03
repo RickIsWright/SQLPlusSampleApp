@@ -14,7 +14,7 @@ namespace SqlPlus.Data.Models
     /// </summary>
     public partial class FeedbackTableMultiResult
 	{
-            public int? FeedbackId { set; get; }
-            public string LastName { set; get; }
-        }
+        public int? FeedbackId { set; get; }
+        public string LastName { set; get; }
+    }
 }

@@ -15,12 +15,12 @@ namespace SqlPlus.Data.Models
     /// </summary>
     public partial class FeedbackByIdResult
 	{
-            public int FeedbackId { set; get; }
-            public string LastName { set; get; }
-            public string FirstName { set; get; }
-            public string Email { set; get; }
-            public string Subject { set; get; }
-            public string Message { set; get; }
-            public DateTime Created { set; get; }
-        }
+        public int FeedbackId { set; get; }
+        public string LastName { set; get; }
+        public string FirstName { set; get; }
+        public string Email { set; get; }
+        public string Subject { set; get; }
+        public string Message { set; get; }
+        public DateTime Created { set; get; }
+    }
 }

@@ -19,7 +19,6 @@ namespace SqlPlus.Data.Models
     /// </summary>
     public partial class FeedbackTableOutput
     {
-
         /// <summary>
         /// FeedbackTableResult result.
         /// </summary>
